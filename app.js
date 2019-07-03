@@ -1,34 +1,36 @@
 const mongoose = require('mongoose');
-// Connection URL
-const url = 'mongodb://localhost:27017';
 
-// Database Name
-const dbName = 'fruitsDB';
+//conectar mongoose con la base de datos fruitsDB
+mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true });
 
-// Create a new MongoClient
-const client = new MongoClient(url, { useNewUrlParser: true });
-
-// Use connect method to connect to the Server
-client.connect(function(err, client) {
-  assert.equal(null, err);
-  console.log("Connected correctly to server");
-
-  const db = client.db(dbName);
-
-    // Insert multiple documents
-    // db.collection('fruits').insertMany([{name: "Apple", score: 9, review: "Great fruit"}, {name: "Orange", score: 6, review: "Kinda sour"}, {name: "Banana", score: 9, review: "Amazing flavor"}], function(err, r) {
-    //   assert.equal(null, err);
-    //   assert.equal(3, r.insertedCount);
-    //   console.log(`Inserted ${r.insertedCount} documents into the collection`);
-    //   // client.close();
-    //   callback(r);
-    // });
-
-    const col = db.collection('fruits');
-    // Get first two documents that match the query
-    col.find({}).toArray(function(err, fruits) {
-      assert.equal(null, err);
-      console.log(fruits);
-      client.close();
-    });
+//schemas 
+const fruitSchema = new mongoose.Schema({
+  name: String,
+  rating: Number,
+  review: String
 });
+
+const personSchema = new mongoose.Schema({
+  name: String,
+  age: Number
+});
+
+//creando collections con mongoose
+const Fruit = mongoose.model("Fruit", fruitSchema);
+
+const Person = mongoose.model("Person", personSchema);
+
+//insertando datos a las collections
+const fruit = new Fruit ({
+  name: "Apple",
+  rating: 7,
+  review: "Pretty solid as a fruit."
+});
+
+const person = new Person ({
+  name: "Wilfredo",
+  
+});
+
+//fruit.save();
+//person.save();
