@@ -5,8 +5,15 @@ mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true }
 
 //schemas 
 const fruitSchema = new mongoose.Schema({
-  name: String,
-  rating: Number,
+  name: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 10
+  }, 
   review: String
 });
 
@@ -22,8 +29,8 @@ const Person = mongoose.model("Person", personSchema);
 
 //insertando datos a las collections
 const fruit = new Fruit ({
-  name: "Apple",
-  rating: 7,
+  name: "Tomato",
+  rating: 4,
   review: "Pretty solid as a fruit."
 });
 
@@ -34,22 +41,6 @@ const person = new Person ({
 
 //fruit.save();
 //person.save();
-
-const orange = new Fruit ({
-  name: "Orange",
-  rating: 7,
-  review: "Amazing"
-});
-const banana = new Fruit ({
-  name: "Banana",
-  rating: 8,
-  review: "is  a yellow fruit"
-});
-const kiwi = new Fruit ({
-  name: "Kiwi",
-  rating: 5,
-  review: "i dont know kiwi"
-});
 
 // insert many item in a db
 //Fruit.insertMany([kiwi, orange, banana], (err) => {
