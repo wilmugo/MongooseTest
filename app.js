@@ -19,7 +19,8 @@ const fruitSchema = new mongoose.Schema({
 
 const personSchema = new mongoose.Schema({
   name: String,
-  age: Number
+  age: Number,
+  favoriteFruit: fruitSchema
 });
 
 //creando collections con mongoose
@@ -34,13 +35,22 @@ const fruit = new Fruit ({
   review: "Pretty solid as a fruit."
 });
 
-const person = new Person ({
-  name: "Wilfredo",
-  age: 36
-});
+const mango = new Fruit({
+  name: "Mango",
+  rating: 9,
+  review: "The best fruit ever."
+})
+
+mango.save()
+
+// const person = new Person ({
+//   name: "Amanda",
+//   age: 10,
+//   favoriteFruit: pineaple
+// });
 
 //fruit.save();
-//person.save();
+// person.save();
 
 // insert many item in a db
 //Fruit.insertMany([kiwi, orange, banana], (err) => {
@@ -65,4 +75,27 @@ Fruit.find((err, fruits) => {
   }
 });
 
+Person.updateOne({ name: "Wilfredo" }, { favoriteFruit: mango }, (err) => {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log('Update people document added favorite fruit to Wilfredo')
+  }
+})
 
+
+// Fruit.deleteOne({ name: 'Tomato'}, (err) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log('Delete sucefully')
+//   }
+// })
+
+// Person.deleteMany({ name: 'Wilfredo' }, (err) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log('Succesfully delete all documents with name Wilfredo')
+//   }
+// })
